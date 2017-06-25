@@ -81,11 +81,11 @@ class EventHandler {
             });
     }
 
-    putElement(schema, name){
+    putElement(tableName, name) {
         let id = uuid.v4();
         const params = {
-            TableName: schema.properties.config.table.name,
-            Item:{
+            TableName: tableName,
+            Item: {
                 'id': id,
                 'name': name
             }
@@ -98,26 +98,32 @@ class EventHandler {
             })
     }
 
-    getAll(tacoName, tacoDescription) {
-        return this.createTable('event2')
-            .then(()=>this.getConfig())
-            .then((schema) => {
-                return this.putElement(schema, 'Fake_1')
-                    .then(()=> this.putElement(schema, 'Fake_2'))
-                    .then(()=> schema);
-            })
+    prepareDB() {
+        return this.getConfig()
+            .then((schema) => this.createTable(schema.properties.config.table.name).then(() => schema))
+            .then((schema) => this.fillDB(schema.properties.config.table.name).then(() => schema));
+    }
+
+    fillDB(tableName) {
+        return this.putElement(tableName, 'Fake_1')
+            .then(() => this.putElement(tableName, 'Fake_2'));
+    }
+
+    getAll() {
+        return this.getConfig()
+            .then((schema) => this.fillDB(schema.properties.config.table.name)
+                .then(() => schema))
             .then((schema) => {
                 console.log('In get all');
-
+                const tableName = schema.properties.config.table.name;
                 const params = {
-                    TableName: schema.properties.config.table.name,
+                    TableName: tableName,
                     ProjectionExpression: '#id, #name',
                     ExpressionAttributeNames: {
                         '#id': 'id',
                         '#name': 'name'
                     }
                 };
-
                 return this.db.scan(params)
                     .promise()
                     .then((data) => {

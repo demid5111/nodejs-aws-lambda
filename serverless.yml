@@ -7,6 +7,19 @@ plugins:
 provider:
   name: aws
   runtime: nodejs6.10
+  environment:
+    DYNAMODB_TABLE: "event3"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:CreateTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
 
 resources:
   Resources:
@@ -15,12 +28,18 @@ resources:
       Properties:
         AttributeDefinitions:
           -
+            AttributeName: id
+            AttributeType: S
+          -
             AttributeName: name
             AttributeType: S
         KeySchema:
           -
             AttributeName: id
             KeyType: HASH
+          -
+            AttributeName: name
+            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
@@ -33,6 +52,7 @@ functions:
       - http:
           path: All
           method: get
+          cors: true
 
 custom:
   serverless-offline:

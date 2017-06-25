@@ -2,3 +2,5 @@
 .idea/
 node_modules/
 tutorials/
+npm-debug.log
+.serverless/
