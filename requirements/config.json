@@ -1,0 +1,13 @@
+{
+  "title": "event",
+  "type": "object",
+  "properties": {
+    "config": {
+      "table": {
+        "name": "event2",
+        "partitionKey": "id",
+        "sortKey": ""
+      }
+    }
+  }
+}

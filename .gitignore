@@ -1,0 +1,4 @@
+*.pdf
+.idea/
+node_modules/
+tutorials/

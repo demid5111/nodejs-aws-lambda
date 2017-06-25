@@ -1,0 +1,40 @@
+service: event-handler
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+resources:
+  Resources:
+    EventDB:
+      Type: 'AWS::DynamoDB::Table'
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: name
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: event
+
+functions:
+  getAll:
+    handler: main_handler.getAll
+    events:
+      - http:
+          path: All
+          method: get
+
+custom:
+  serverless-offline:
+    babelOptions:
+      presets: ["es2015"]

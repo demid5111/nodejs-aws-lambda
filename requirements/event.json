@@ -1,0 +1,48 @@
+{
+  "GET": {
+    "id": "/All",
+    "type": "object",
+    "properties": {
+      "httpMethod": {"type": "string"},
+      "params": {
+        "type": "object",
+        "properties": {
+          "model": {"type": "string"},
+          "id": {"type": "string"}
+        },
+        "required": ["model", "id"]
+      }
+    }
+  },
+  "PUT": {
+    "id": "/All",
+    "type": "object",
+    "properties": {
+      "httpMethod": {"type": "string"},
+      "body": {},
+      "params": {
+        "type": "object",
+        "properties": {
+          "model": { "type" : "string" },
+          "id": { "type" : "string" }
+        },
+        "required": ["model"]
+      }
+    }
+  },
+  "DELETE": {
+    "id": "/All",
+    "type": "object",
+    "properties": {
+      "httpMethod": {"type": "string"},
+      "params": {
+        "type": "object",
+        "properties": {
+          "model": {"type": "string"},
+          "id": {"type": "string"}
+        }
+      },
+      "required": ["model", "id"]
+    }
+  }
+}

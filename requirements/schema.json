@@ -1,0 +1,27 @@
+{
+  "title": "event",
+  "type": "object",
+  "properties": {
+    "dataSchema": {
+      "id": "/model",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "subject": { "type": "string" },
+        "image": { "type": "string" },
+        "description": { "type": "string" },
+        "start": { "type": "string" },
+        "end": { "type": "string" },
+        "Rsvp": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rsvpId": { "type": "string" }
+            }
+          } 
+        }
+      }
+    }
+  }
+}
