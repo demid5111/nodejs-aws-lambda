@@ -111,8 +111,6 @@ class EventHandler {
 
     getAll() {
         return this.getConfig()
-            .then((schema) => this.fillDB(schema.properties.config.table.name)
-                .then(() => schema))
             .then((schema) => {
                 console.log('In get all');
                 const tableName = schema.properties.config.table.name;
